@@ -1,0 +1,245 @@
+---
+import IconLogo from './icons/IconLogo.astro';
+
+const navLinks = [
+  { name: 'About', url: '/#about' },
+  { name: 'Experience', url: '/#jobs' },
+  { name: 'Work', url: '/#projects' },
+  { name: 'Contact', url: '/#contact' },
+];
+---
+
+<header id="nav-header">
+  <nav class="flex-between">
+    <div class="logo" tabindex="-1">
+      <a href="/" aria-label="Home">
+        <IconLogo />
+      </a>
+    </div>
+    <div class="nav-links">
+      <ol>
+        {navLinks.map(link => (
+          <li>
+            <a href={link.url}>{link.name}</a>
+          </li>
+        ))}
+      </ol>
+      <a class="btn resume-btn" href="/resume.pdf" target="_blank" rel="noreferrer">
+        Resume
+      </a>
+    </div>
+    <button
+      class="hamburger"
+      aria-label="Menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <div class="ham-box">
+        <div class="ham-box-inner"></div>
+      </div>
+    </button>
+  </nav>
+</header>
+
+<style>
+  header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: var(--nav-height);
+    z-index: 11;
+    background-color: rgba(18, 18, 18, 0.85);
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+    filter: none !important;
+    pointer-events: auto !important;
+    user-select: auto !important;
+  }
+
+  header.scroll-down {
+    height: var(--nav-scroll-height);
+    transform: translateY(calc(var(--nav-scroll-height) * -1));
+    box-shadow: 0 10px 30px -10px var(--shadow-color);
+  }
+
+  header.scroll-up {
+    height: var(--nav-scroll-height);
+    transform: translateY(0);
+    box-shadow: 0 10px 30px -10px var(--shadow-color);
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0 50px;
+    font-family: var(--font-mono);
+    counter-reset: nav-item 0;
+    z-index: 12;
+  }
+
+  @media (max-width: 1080px) {
+    nav {
+      padding: 0 40px;
+    }
+  }
+  @media (max-width: 768px) {
+    nav {
+      padding: 0 25px;
+    }
+  }
+
+  .logo a {
+    display: block;
+    color: var(--flutter-blue);
+    width: 42px;
+    height: 42px;
+    transition: var(--transition);
+  }
+  .logo a:hover,
+  .logo a:focus-visible {
+    opacity: 0.7;
+  }
+  .logo a svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+  }
+
+  .nav-links ol {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .nav-links ol li {
+    counter-increment: nav-item 1;
+  }
+
+  .nav-links ol li a {
+    padding: 10px;
+    font-size: var(--fz-xs);
+    color: var(--lightest-slate);
+    transition: var(--transition);
+  }
+
+  .nav-links ol li a::before {
+    content: '0' counter(nav-item) '.';
+    margin-right: 5px;
+    color: var(--flutter-blue);
+    font-size: var(--fz-xxs);
+  }
+
+  .nav-links ol li a:hover,
+  .nav-links ol li a:focus-visible {
+    color: var(--flutter-blue);
+  }
+
+  .resume-btn {
+    margin-left: 15px;
+  }
+
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    padding: 15px;
+    border: 0;
+    background-color: transparent;
+    color: inherit;
+    cursor: pointer;
+    z-index: 13;
+  }
+
+  @media (max-width: 768px) {
+    .hamburger {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .ham-box {
+    display: inline-block;
+    position: relative;
+    width: var(--hamburger-width);
+    height: 24px;
+  }
+
+  .ham-box-inner {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: var(--hamburger-width);
+    height: 2px;
+    border-radius: var(--border-radius);
+    background-color: var(--flutter-blue);
+    transition-duration: 0.22s;
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  .ham-box-inner::before,
+  .ham-box-inner::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: auto;
+    right: 0;
+    width: var(--hamburger-width);
+    height: 2px;
+    border-radius: var(--border-radius);
+    background-color: var(--flutter-blue);
+    transition-timing-function: ease;
+    transition-duration: 0.15s;
+    transition-property: transform;
+  }
+
+  .ham-box-inner::before {
+    width: 120%;
+    top: -10px;
+    transition: top 0.1s ease-in 0.25s, opacity 0.1s ease-in;
+  }
+
+  .ham-box-inner::after {
+    width: 80%;
+    bottom: -10px;
+    transition: bottom 0.1s ease-in 0.25s,
+      transform 0.22s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  /* Hamburger active state */
+  .hamburger.active .ham-box-inner {
+    transform: rotate(225deg);
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition-delay: 0.12s;
+  }
+
+  .hamburger.active .ham-box-inner::before {
+    width: 100%;
+    top: 0;
+    opacity: 0;
+    transition: top 0.1s ease-out, opacity 0.1s ease-out 0.12s;
+  }
+
+  .hamburger.active .ham-box-inner::after {
+    width: 100%;
+    bottom: 0;
+    transform: rotate(-90deg);
+    transition: bottom 0.1s ease-out,
+      transform 0.22s cubic-bezier(0.215, 0.61, 0.355, 1) 0.12s;
+  }
+</style>

@@ -1,0 +1,30 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Isaac Suazo',
+  description = 'Isaac Suazo is a software engineer who specializes in building exceptional digital experiences.',
+} = Astro.props;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content={description} />
+<title>{title}</title>
+
+<link rel="icon" href="/favicon.ico" />
+
+<!-- Font preloads -->
+<link rel="preload" href="/fonts/inter-regular.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/inter-medium.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/inter-semibold.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/firacode-regular.woff2" as="font" type="font/woff2" crossorigin />
+
+<!-- Open Graph -->
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="/og.png" />

@@ -1,0 +1,46 @@
+---
+interface Props {
+  orientation: 'left' | 'right';
+}
+
+const { orientation } = Astro.props;
+---
+
+<div class={`side ${orientation}`}>
+  <slot />
+</div>
+
+<style>
+  .side {
+    position: fixed;
+    bottom: 0;
+    width: 40px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .left {
+    left: 40px;
+  }
+
+  .right {
+    right: 40px;
+  }
+
+  @media (max-width: 1080px) {
+    .left {
+      left: 20px;
+    }
+    .right {
+      right: 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .side {
+      display: none;
+    }
+  }
+</style>

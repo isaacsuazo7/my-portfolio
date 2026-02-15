@@ -1,0 +1,41 @@
+---
+import Head from '@components/Head.astro';
+import Nav from '@components/Nav.astro';
+import Social from '@components/Social.astro';
+import Email from '@components/Email.astro';
+import Footer from '@components/Footer.astro';
+
+import '@styles/fonts.css';
+import '@styles/variables.css';
+import '@styles/global.css';
+import '@styles/mixins.css';
+import '@styles/transitions.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <Head title={title} description={description} />
+  </head>
+  <body>
+    <a href="#content" id="skip-to-content">Skip to Content</a>
+    <div id="root">
+      <div id="content">
+        <Nav />
+        <Social />
+        <Email />
+        <main>
+          <slot />
+        </main>
+        <Footer />
+      </div>
+    </div>
+  </body>
+</html>

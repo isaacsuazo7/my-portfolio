@@ -1,14 +1,25 @@
 ---
-
+import Layout from '@layouts/Layout.astro';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Isaac Suazo</title>
-  </head>
-  <body>
-    <h1>Portfolio</h1>
-  </body>
-</html>
+<Layout>
+  <section id="hero" style="min-height: 100vh; display: flex; align-items: center;">
+    <h1 class="big-heading">Placeholder Hero</h1>
+  </section>
+  <section id="about">
+    <h2 class="numbered-heading">About Me</h2>
+    <p>Placeholder about section.</p>
+  </section>
+  <section id="jobs">
+    <h2 class="numbered-heading">Where I've Worked</h2>
+    <p>Placeholder jobs section.</p>
+  </section>
+  <section id="projects">
+    <h2 class="numbered-heading">Some Things I've Built</h2>
+    <p>Placeholder projects section.</p>
+  </section>
+  <section id="contact">
+    <h2 class="numbered-heading">What's Next?</h2>
+    <p>Placeholder contact section.</p>
+  </section>
+</Layout>

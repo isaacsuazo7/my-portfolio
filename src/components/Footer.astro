@@ -1,0 +1,103 @@
+---
+import IconGitHub from './icons/IconGitHub.astro';
+import IconLinkedin from './icons/IconLinkedin.astro';
+import IconTwitter from './icons/IconTwitter.astro';
+import IconInstagram from './icons/IconInstagram.astro';
+import IconCodepen from './icons/IconCodepen.astro';
+
+const socials = [
+  { name: 'GitHub', url: 'https://github.com' },
+  { name: 'LinkedIn', url: 'https://linkedin.com' },
+  { name: 'Twitter', url: 'https://twitter.com' },
+  { name: 'Instagram', url: 'https://instagram.com' },
+  { name: 'CodePen', url: 'https://codepen.io' },
+];
+---
+
+<footer>
+  <div class="social-links-mobile">
+    <ul>
+      {socials.map(social => (
+        <li>
+          <a href={social.url} aria-label={social.name} target="_blank" rel="noreferrer">
+            {social.name === 'GitHub' && <IconGitHub />}
+            {social.name === 'LinkedIn' && <IconLinkedin />}
+            {social.name === 'Twitter' && <IconTwitter />}
+            {social.name === 'Instagram' && <IconInstagram />}
+            {social.name === 'CodePen' && <IconCodepen />}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <div class="credit">
+    <a href="https://brittanychiang.com" target="_blank" rel="noreferrer">
+      Designed by Brittany Chiang
+    </a>
+  </div>
+</footer>
+
+<style>
+  footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 70px;
+    padding: 15px;
+    text-align: center;
+  }
+
+  .social-links-mobile {
+    display: none;
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 768px) {
+    .social-links-mobile {
+      display: block;
+    }
+  }
+
+  .social-links-mobile ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .social-links-mobile a {
+    padding: 10px;
+    display: inline-block;
+    color: var(--light-slate);
+    transition: var(--transition);
+  }
+
+  .social-links-mobile a:hover {
+    color: var(--flutter-blue);
+  }
+
+  .social-links-mobile svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .credit {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xxs);
+    line-height: 1;
+  }
+
+  .credit a {
+    color: var(--light-slate);
+    text-decoration: none;
+    padding: 10px;
+    transition: var(--transition);
+  }
+
+  .credit a:hover {
+    color: var(--flutter-blue);
+  }
+</style>
