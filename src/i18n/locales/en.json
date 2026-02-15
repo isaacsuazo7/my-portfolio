@@ -26,7 +26,7 @@
       { "name": "Instagram", "url": "https://instagram.com", "icon": "instagram" },
       { "name": "CodePen", "url": "https://codepen.io", "icon": "codepen" }
     ],
-    "email": "hello@example.com"
+    "email": "isaacsuazo7@gmail.com"
   },
   "hero": {
     "greeting": "Hi, my name is",
@@ -78,7 +78,10 @@
     "ctaText": "Say Hello"
   },
   "footer": {
-    "designedBy": "Designed by Brittany Chiang"
+    "inspiredBy": "Design inspired by",
+    "inspiredByName": "Brittany Chiang",
+    "builtBy": "Built by",
+    "builtByName": "Isaac Suazo"
   },
   "a11y": {
     "skipToContent": "Skip to Content"

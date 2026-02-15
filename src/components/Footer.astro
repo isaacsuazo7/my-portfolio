@@ -33,7 +33,11 @@ const t = useTranslations(locale);
   </div>
   <div class="credit">
     <a href="https://brittanychiang.com" target="_blank" rel="noreferrer">
-      {t.footer.designedBy}
+      {t.footer.inspiredBy} {t.footer.inspiredByName}
+    </a>
+    <span class="separator">&middot;</span>
+    <a href={t.social.profiles[0].url} target="_blank" rel="noreferrer">
+      {t.footer.builtBy} {t.footer.builtByName}
     </a>
   </div>
 </footer>
@@ -90,6 +94,11 @@ const t = useTranslations(locale);
     font-family: var(--font-mono);
     font-size: var(--fz-xxs);
     line-height: 1;
+  }
+
+  .separator {
+    margin: 0 0.5em;
+    color: var(--slate);
   }
 
   .credit a {

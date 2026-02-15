@@ -78,7 +78,10 @@
     "ctaText": "Decí hola"
   },
   "footer": {
-    "designedBy": "Diseñado por Brittany Chiang"
+    "inspiredBy": "Diseño inspirado en",
+    "inspiredByName": "Brittany Chiang",
+    "builtBy": "Desarrollado por",
+    "builtByName": "Isaac Suazo"
   },
   "a11y": {
     "skipToContent": "Ir al contenido"
