@@ -1,5 +1,6 @@
 ---
 import IconLogo from './icons/IconLogo.astro';
+import Menu from './Menu.astro';
 
 const navLinks = [
   { name: 'About', url: '/#about' },
@@ -18,13 +19,13 @@ const navLinks = [
     </div>
     <div class="nav-links">
       <ol>
-        {navLinks.map(link => (
-          <li>
+        {navLinks.map((link, i) => (
+          <li style={`transition-delay: ${i * 100}ms;`}>
             <a href={link.url}>{link.name}</a>
           </li>
         ))}
       </ol>
-      <a class="btn resume-btn" href="/resume.pdf" target="_blank" rel="noreferrer">
+      <a class="btn resume-btn" href="/resume.pdf" target="_blank" rel="noreferrer" style="transition-delay: 400ms;">
         Resume
       </a>
     </div>
@@ -39,7 +40,13 @@ const navLinks = [
       </div>
     </button>
   </nav>
+  <Menu />
 </header>
+
+<script>
+  import '@js/nav-scroll';
+  import '@js/menu';
+</script>
 
 <style>
   header {

@@ -1,5 +1,6 @@
 ---
 import Head from '@components/Head.astro';
+import Loader from '@components/Loader.astro';
 import Nav from '@components/Nav.astro';
 import Social from '@components/Social.astro';
 import Email from '@components/Email.astro';
@@ -24,9 +25,10 @@ const { title, description } = Astro.props;
   <head>
     <Head title={title} description={description} />
   </head>
-  <body>
+  <body class="loading">
     <a href="#content" id="skip-to-content">Skip to Content</a>
     <div id="root">
+      <Loader />
       <div id="content">
         <Nav />
         <Social />
@@ -37,5 +39,9 @@ const { title, description } = Astro.props;
         <Footer />
       </div>
     </div>
+    <script>
+      import '@js/loader';
+      import '@js/scroll-reveal';
+    </script>
   </body>
 </html>

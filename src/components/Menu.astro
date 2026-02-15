@@ -1,0 +1,103 @@
+---
+const navLinks = [
+  { name: 'About', url: '/#about' },
+  { name: 'Experience', url: '/#jobs' },
+  { name: 'Work', url: '/#projects' },
+  { name: 'Contact', url: '/#contact' },
+];
+---
+
+<aside id="mobile-menu" class="menu" aria-hidden="true">
+  <nav>
+    <ol>
+      {navLinks.map(link => (
+        <li>
+          <a href={link.url}>{link.name}</a>
+        </li>
+      ))}
+    </ol>
+    <a class="btn btn-big resume-link" href="/resume.pdf" target="_blank" rel="noreferrer">
+      Resume
+    </a>
+  </nav>
+</aside>
+
+<style>
+  .menu {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: min(75vw, 400px);
+    height: 100vh;
+    z-index: 12;
+    background-color: var(--dark-gray);
+    transform: translateX(100vw);
+    visibility: hidden;
+    transition: var(--transition);
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .menu {
+      display: block;
+    }
+  }
+
+  .menu.open {
+    transform: translateX(0);
+    visibility: visible;
+    box-shadow: -10px 0 30px -15px var(--shadow-color);
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 50px 10px;
+    text-align: center;
+  }
+
+  ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    counter-reset: menu-item 0;
+  }
+
+  ol li {
+    counter-increment: menu-item 1;
+    margin: 0 auto 20px;
+  }
+
+  ol li a {
+    display: inline-block;
+    position: relative;
+    padding: 3px 20px 20px;
+    font-size: clamp(var(--fz-sm), 4vw, var(--fz-xl));
+    color: var(--lightest-slate);
+    font-family: var(--font-mono);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  ol li a::before {
+    display: block;
+    content: '0' counter(menu-item) '.';
+    margin-bottom: 5px;
+    color: var(--flutter-blue);
+    font-size: var(--fz-sm);
+  }
+
+  ol li a:hover {
+    color: var(--flutter-blue);
+  }
+
+  .resume-link {
+    margin-top: 50px;
+  }
+</style>

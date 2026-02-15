@@ -1,0 +1,31 @@
+---
+import IconLoader from './icons/IconLoader.astro';
+---
+
+<div class="loader" id="loader">
+  <div class="logo-wrapper">
+    <IconLoader />
+  </div>
+</div>
+
+<style>
+  .loader {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--dark-black);
+    z-index: 99;
+  }
+
+  .logo-wrapper {
+    width: max(100px, 80px);
+    opacity: 0;
+    color: var(--flutter-blue);
+  }
+
+  .logo-wrapper :global(#IS) {
+    opacity: 0;
+  }
+</style>
