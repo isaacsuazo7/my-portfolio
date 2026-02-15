@@ -1,0 +1,86 @@
+{
+  "meta": {
+    "title": "Isaac Suazo",
+    "description": "Isaac Suazo es un ingeniero de software especializado en construir experiencias digitales excepcionales.",
+    "ogImage": "/og.png"
+  },
+  "nav": {
+    "links": [
+      { "name": "Sobre mí", "url": "/es/#about" },
+      { "name": "Experiencia", "url": "/es/#jobs" },
+      { "name": "Proyectos", "url": "/es/#projects" },
+      { "name": "Blog", "url": "/es/#blog" },
+      { "name": "Contacto", "url": "/es/#contact" }
+    ],
+    "resumeText": "Currículum",
+    "resumeUrl": "/resume.pdf",
+    "menuAriaLabel": "Menú",
+    "homeAriaLabel": "Inicio",
+    "langSwitchLabel": "EN"
+  },
+  "social": {
+    "profiles": [
+      { "name": "GitHub", "url": "https://github.com", "icon": "github" },
+      { "name": "LinkedIn", "url": "https://linkedin.com", "icon": "linkedin" },
+      { "name": "Twitter", "url": "https://twitter.com", "icon": "twitter" },
+      { "name": "Instagram", "url": "https://instagram.com", "icon": "instagram" },
+      { "name": "CodePen", "url": "https://codepen.io", "icon": "codepen" }
+    ],
+    "email": "hello@example.com"
+  },
+  "hero": {
+    "greeting": "Hola, mi nombre es",
+    "name": "Isaac Suazo.",
+    "tagline": "Construyo cosas para la web.",
+    "description": "Soy un ingeniero de software especializado en construir (y ocasionalmente diseñar) experiencias digitales excepcionales. Actualmente, estoy enfocado en crear productos accesibles y centrados en las personas en",
+    "companyName": "Example Corp",
+    "companyUrl": "https://example.com",
+    "ctaText": "Ponete en contacto"
+  },
+  "about": {
+    "heading": "Sobre mí",
+    "paragraphs": [
+      "¡Hola! Mi nombre es Isaac y disfruto creando cosas que viven en internet. Mi interés en el desarrollo web comenzó en 2012 cuando decidí probar editando temas personalizados de Tumblr — resulta que armar un botón de reblog personalizado me enseñó un montón sobre HTML y CSS.",
+      "Avanzando hasta hoy, tuve el privilegio de trabajar en {links}. Mi enfoque principal actualmente es construir productos accesibles, inclusivos y experiencias digitales."
+    ],
+    "companyLinks": [
+      { "text": "una startup", "url": "https://example.com" },
+      { "text": "una gran corporación", "url": "https://example.com" },
+      { "text": "un estudio de diseño estudiantil", "url": "https://example.com" }
+    ],
+    "skillsIntro": "Algunas tecnologías con las que estuve trabajando recientemente:",
+    "skills": ["Flutter", "Dart", "TypeScript", "Astro", "Firebase", "Node.js"],
+    "imageUrl": "/images/projects/project-1.png",
+    "imageAlt": "Isaac Suazo"
+  },
+  "jobs": {
+    "heading": "Dónde trabajé",
+    "tabsAriaLabel": "Pestañas de trabajo"
+  },
+  "featured": {
+    "heading": "Algunas cosas que construí",
+    "label": "Proyecto destacado",
+    "githubAriaLabel": "Enlace a GitHub",
+    "externalAriaLabel": "Enlace externo"
+  },
+  "blog": {
+    "heading": "Blog y Tutoriales",
+    "archiveText": "ver todo en Medium",
+    "archiveUrl": "https://isaacsuazo7.medium.com/",
+    "showMoreText": "Ver más",
+    "showLessText": "Ver menos",
+    "externalAriaLabel": "Leer artículo"
+  },
+  "contact": {
+    "overline": "05. ¿Qué sigue?",
+    "heading": "Ponete en contacto",
+    "description": "Aunque actualmente no estoy buscando nuevas oportunidades, mi bandeja de entrada siempre está abierta. Ya sea que tengas una pregunta o simplemente quieras saludar, voy a hacer lo posible por responderte.",
+    "ctaText": "Decí hola"
+  },
+  "footer": {
+    "designedBy": "Diseñado por Brittany Chiang"
+  },
+  "a11y": {
+    "skipToContent": "Ir al contenido"
+  }
+}

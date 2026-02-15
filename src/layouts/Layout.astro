@@ -1,10 +1,11 @@
 ---
 import Head from '@components/Head.astro';
-import Loader from '@components/Loader.astro';
 import Nav from '@components/Nav.astro';
 import Social from '@components/Social.astro';
 import Email from '@components/Email.astro';
 import Footer from '@components/Footer.astro';
+import { useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/constants';
 
 import '@styles/fonts.css';
 import '@styles/variables.css';
@@ -13,34 +14,32 @@ import '@styles/mixins.css';
 import '@styles/transitions.css';
 
 interface Props {
-  title?: string;
-  description?: string;
+  locale?: Locale;
 }
 
-const { title, description } = Astro.props;
+const { locale = 'en' } = Astro.props;
+const t = useTranslations(locale);
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang={locale}>
   <head>
-    <Head title={title} description={description} />
+    <Head locale={locale} />
   </head>
-  <body class="loading">
-    <a href="#content" id="skip-to-content">Skip to Content</a>
+  <body>
+    <a href="#content" id="skip-to-content">{t.a11y.skipToContent}</a>
     <div id="root">
-      <Loader />
       <div id="content">
-        <Nav />
-        <Social />
-        <Email />
+        <Nav locale={locale} />
+        <Social locale={locale} />
+        <Email locale={locale} />
         <main>
           <slot />
         </main>
-        <Footer />
+        <Footer locale={locale} />
       </div>
     </div>
     <script>
-      import '@js/loader';
       import '@js/scroll-reveal';
     </script>
   </body>

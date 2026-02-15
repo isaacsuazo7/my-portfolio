@@ -17,5 +17,8 @@ node_modules/
 # project plan (not for repo)
 PLAN.md
 
+# firebase
+*-debug.log
+
 # claude config
 .claude/

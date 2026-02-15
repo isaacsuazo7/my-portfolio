@@ -1,19 +1,25 @@
 ---
+import { useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/constants';
 
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = useTranslations(locale);
 ---
 
 <section id="hero">
-  <h1 class="hero-overline hero-anim fadeup-enter">Hi, my name is</h1>
-  <h2 class="big-heading hero-name hero-anim fadeup-enter">Isaac Suazo.</h2>
-  <h3 class="big-heading hero-subtitle hero-anim fadeup-enter">I build things for the web.</h3>
+  <p class="hero-overline hero-anim fadeup-enter">{t.hero.greeting}</p>
+  <h1 class="big-heading hero-name hero-anim fadeup-enter">{t.hero.name}</h1>
+  <h2 class="big-heading hero-subtitle hero-anim fadeup-enter">{t.hero.tagline}</h2>
   <p class="hero-description hero-anim fadeup-enter">
-    I'm a software engineer specializing in building (and occasionally designing)
-    exceptional digital experiences. Currently, I'm focused on building accessible,
-    human-centered products at
-    <a class="inline-link" href="https://example.com" target="_blank" rel="noreferrer">Example Corp</a>.
+    {t.hero.description}
+    <a class="inline-link" href={t.hero.companyUrl} target="_blank" rel="noreferrer">{t.hero.companyName}</a>.
   </p>
-  <a class="btn btn-big hero-cta hero-anim fadeup-enter" href="mailto:hello@example.com">
-    Get In Touch
+  <a class="btn btn-big hero-cta hero-anim fadeup-enter" href={`mailto:${t.social.email}`}>
+    {t.hero.ctaText}
   </a>
 </section>
 
@@ -42,6 +48,13 @@
   .hero-subtitle {
     color: var(--slate);
     margin-top: 5px;
+    line-height: 0.9;
+  }
+
+  @media (max-width: 480px) {
+    .hero-overline {
+      margin: 0 0 20px 2px;
+    }
   }
 
   .hero-description {
@@ -64,16 +77,12 @@
       return;
     }
 
-    function animate() {
-      heroElements.forEach((el, i) => {
-        setTimeout(() => {
-          el.classList.add('fadeup-enter-active');
-        }, i * 100);
-      });
-    }
-
-    document.addEventListener('loader-complete', animate);
+    heroElements.forEach((el, i) => {
+      setTimeout(() => {
+        el.classList.add('fadeup-enter-active');
+      }, i * 100);
+    });
   }
 
-  document.addEventListener('DOMContentLoaded', initHeroAnimations);
+  document.addEventListener('astro:page-load', initHeroAnimations);
 </script>

@@ -3,13 +3,22 @@ import { getCollection } from 'astro:content';
 import { render } from 'astro:content';
 import IconGitHub from '@icons/IconGitHub.astro';
 import IconExternal from '@icons/IconExternal.astro';
+import { useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/constants';
 
-const allFeatured = await getCollection('featured');
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = useTranslations(locale);
+
+const allFeatured = await getCollection(`featured-${locale}`);
 const projects = allFeatured.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 ---
 
-<section id="featured" data-sr>
-  <h2 class="numbered-heading">Some Things I've Built</h2>
+<section id="projects" data-sr>
+  <h2 class="numbered-heading">{t.featured.heading}</h2>
   <ul class="featured-list">
     {projects.map(async (project, i) => {
       const { Content } = await render(project);
@@ -17,7 +26,7 @@ const projects = allFeatured.sort((a, b) => new Date(b.data.date).getTime() - ne
         <li class="featured-project" data-sr data-sr-delay={String(i * 100)}>
           <div class="project-content">
             <div>
-              <p class="project-overline">Featured Project</p>
+              <p class="project-overline">{t.featured.label}</p>
               <h3 class="project-title">
                 <a href={project.data.external || project.data.github || '#'}>{project.data.title}</a>
               </h3>
@@ -25,16 +34,16 @@ const projects = allFeatured.sort((a, b) => new Date(b.data.date).getTime() - ne
                 <Content />
               </div>
               <ul class="project-tech-list">
-                {project.data.tech.map(t => <li>{t}</li>)}
+                {project.data.tech.map(tech => <li>{tech}</li>)}
               </ul>
               <div class="project-links">
                 {project.data.github && (
-                  <a href={project.data.github} aria-label="GitHub Link" target="_blank" rel="noreferrer">
+                  <a href={project.data.github} aria-label={t.featured.githubAriaLabel} target="_blank" rel="noreferrer">
                     <IconGitHub />
                   </a>
                 )}
                 {project.data.external && (
-                  <a href={project.data.external} aria-label="External Link" target="_blank" rel="noreferrer">
+                  <a href={project.data.external} aria-label={t.featured.externalAriaLabel} target="_blank" rel="noreferrer">
                     <IconExternal />
                   </a>
                 )}
@@ -73,10 +82,16 @@ const projects = allFeatured.sort((a, b) => new Date(b.data.date).getTime() - ne
     }
   }
 
+  @media (max-width: 480px) {
+    .featured-project {
+      margin-bottom: 30px;
+    }
+  }
+
   /* Even items: content left, image right */
   .project-content {
     position: relative;
-    grid-column: 1 / 7;
+    grid-column: 1 / 8;
     grid-row: 1 / -1;
     z-index: 2;
   }
@@ -139,7 +154,7 @@ const projects = allFeatured.sort((a, b) => new Date(b.data.date).getTime() - ne
   }
 
   .project-title {
-    font-size: clamp(24px, 5vw, 28px);
+    font-size: clamp(1.5rem, 5vw, 1.75rem);
     color: var(--lightest-slate);
     margin: 0 0 20px;
   }
@@ -179,10 +194,16 @@ const projects = allFeatured.sort((a, b) => new Date(b.data.date).getTime() - ne
     flex-wrap: wrap;
     position: relative;
     z-index: 2;
-    margin: 25px 0 10px;
+    margin: 20px 0 10px;
     padding: 0;
     list-style: none;
-    gap: 15px;
+    gap: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .project-tech-list {
+      gap: 10px;
+    }
   }
 
   .project-tech-list li {
@@ -215,7 +236,7 @@ const projects = allFeatured.sort((a, b) => new Date(b.data.date).getTime() - ne
   .project-links a:hover {
     color: var(--flutter-blue);
   }
-  .project-links a svg {
+  .project-links a :global(svg) {
     width: 20px;
     height: 20px;
   }

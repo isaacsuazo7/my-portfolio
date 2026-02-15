@@ -1,4 +1,8 @@
+let cleanup: (() => void) | null = null;
+
 function initMenu() {
+  cleanup?.();
+
   const hamburger = document.querySelector('.hamburger') as HTMLButtonElement;
   const menu = document.getElementById('mobile-menu') as HTMLElement;
 
@@ -35,41 +39,27 @@ function initMenu() {
     }
   }
 
-  // Toggle on hamburger click
-  hamburger.addEventListener('click', toggleMenu);
-
-  // Close on Escape
-  document.addEventListener('keydown', (e: KeyboardEvent) => {
+  function onKeydown(e: KeyboardEvent) {
     if (e.key === 'Escape' && isOpen) {
       closeMenu();
       hamburger.focus();
     }
-  });
+  }
 
-  // Click outside to close
-  document.addEventListener('mousedown', (e: MouseEvent) => {
+  function onMousedown(e: MouseEvent) {
     const target = e.target as HTMLElement;
     if (isOpen && !menu.contains(target) && !hamburger.contains(target)) {
       closeMenu();
     }
-  });
+  }
 
-  // Close on nav link click
-  menu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      if (isOpen) closeMenu();
-    });
-  });
-
-  // Auto-close on resize past 768px
-  window.addEventListener('resize', () => {
+  function onResize() {
     if (window.innerWidth > 768 && isOpen) {
       closeMenu();
     }
-  });
+  }
 
-  // Focus trap
-  document.addEventListener('keydown', (e: KeyboardEvent) => {
+  function onFocusTrap(e: KeyboardEvent) {
     if (e.key !== 'Tab' || !isOpen) return;
 
     const focusableElements = menu.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
@@ -87,7 +77,27 @@ function initMenu() {
         firstFocusable.focus();
       }
     }
+  }
+
+  hamburger.addEventListener('click', toggleMenu);
+  document.addEventListener('keydown', onKeydown);
+  document.addEventListener('mousedown', onMousedown);
+  window.addEventListener('resize', onResize);
+  document.addEventListener('keydown', onFocusTrap);
+
+  menu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (isOpen) closeMenu();
+    });
   });
+
+  cleanup = () => {
+    hamburger.removeEventListener('click', toggleMenu);
+    document.removeEventListener('keydown', onKeydown);
+    document.removeEventListener('mousedown', onMousedown);
+    window.removeEventListener('resize', onResize);
+    document.removeEventListener('keydown', onFocusTrap);
+  };
 }
 
-document.addEventListener('DOMContentLoaded', initMenu);
+document.addEventListener('astro:page-load', initMenu);

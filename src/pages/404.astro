@@ -1,0 +1,39 @@
+---
+import Layout from '@layouts/Layout.astro';
+---
+
+<Layout locale="en">
+  <section class="not-found">
+    <h1>404</h1>
+    <h2>Page Not Found</h2>
+    <a class="btn btn-big" href="/">Go Home</a>
+  </section>
+</Layout>
+
+<style>
+  .not-found {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 0;
+    text-align: center;
+  }
+
+  h1 {
+    color: var(--flutter-blue);
+    font-family: var(--font-mono);
+    font-size: clamp(6.25rem, 25vw, 12.5rem);
+    line-height: 1;
+  }
+
+  h2 {
+    font-size: clamp(1.875rem, 5vw, 3.125rem);
+    margin-top: 10px;
+  }
+
+  .btn {
+    margin-top: 40px;
+  }
+</style>

@@ -1,10 +1,19 @@
 ---
 import Side from './Side.astro';
+import { useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/constants';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = useTranslations(locale);
 ---
 
 <Side orientation="right">
   <div class="email-wrapper">
-    <a href="mailto:hello@example.com">hello@example.com</a>
+    <a href={`mailto:${t.social.email}`}>{t.social.email}</a>
   </div>
 </Side>
 
@@ -29,6 +38,7 @@ import Side from './Side.astro';
     font-family: var(--font-mono);
     font-size: var(--fz-xxs);
     letter-spacing: 0.1em;
+    line-height: var(--fz-lg);
     color: var(--light-slate);
     transition: var(--transition);
     padding: 10px;

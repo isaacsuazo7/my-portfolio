@@ -5,19 +5,20 @@ import IconLinkedin from './icons/IconLinkedin.astro';
 import IconTwitter from './icons/IconTwitter.astro';
 import IconInstagram from './icons/IconInstagram.astro';
 import IconCodepen from './icons/IconCodepen.astro';
+import { useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/constants';
 
-const socials = [
-  { name: 'GitHub', url: 'https://github.com', icon: 'github' },
-  { name: 'LinkedIn', url: 'https://linkedin.com', icon: 'linkedin' },
-  { name: 'Twitter', url: 'https://twitter.com', icon: 'twitter' },
-  { name: 'Instagram', url: 'https://instagram.com', icon: 'instagram' },
-  { name: 'CodePen', url: 'https://codepen.io', icon: 'codepen' },
-];
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = useTranslations(locale);
 ---
 
 <Side orientation="left">
   <ul class="social-list">
-    {socials.map(social => (
+    {t.social.profiles.map(social => (
       <li>
         <a href={social.url} aria-label={social.name} target="_blank" rel="noreferrer">
           {social.icon === 'github' && <IconGitHub />}
@@ -63,7 +64,7 @@ const socials = [
     transform: translateY(-3px);
   }
 
-  .social-list li a svg {
+  .social-list li a :global(svg) {
     width: 20px;
     height: 20px;
   }

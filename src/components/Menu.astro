@@ -1,23 +1,30 @@
 ---
-const navLinks = [
-  { name: 'About', url: '/#about' },
-  { name: 'Experience', url: '/#jobs' },
-  { name: 'Work', url: '/#projects' },
-  { name: 'Contact', url: '/#contact' },
-];
+import { useTranslations, getLocalizedUrl } from '@i18n/utils';
+import type { Locale } from '@i18n/constants';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = useTranslations(locale);
+const otherLocale = locale === 'en' ? 'es' : 'en';
 ---
 
 <aside id="mobile-menu" class="menu" aria-hidden="true">
   <nav>
     <ol>
-      {navLinks.map(link => (
+      {t.nav.links.map(link => (
         <li>
           <a href={link.url}>{link.name}</a>
         </li>
       ))}
     </ol>
-    <a class="btn btn-big resume-link" href="/resume.pdf" target="_blank" rel="noreferrer">
-      Resume
+    <a class="btn btn-big lang-switch-mobile" href={getLocalizedUrl(otherLocale)}>
+      {t.nav.langSwitchLabel}
+    </a>
+    <a class="btn btn-big resume-link" href={t.nav.resumeUrl} target="_blank" rel="noreferrer">
+      {t.nav.resumeText}
     </a>
   </nav>
 </aside>
@@ -78,7 +85,7 @@ const navLinks = [
     display: inline-block;
     position: relative;
     padding: 3px 20px 20px;
-    font-size: clamp(var(--fz-sm), 4vw, var(--fz-xl));
+    font-size: clamp(var(--fz-sm), 4vw, var(--fz-lg));
     color: var(--lightest-slate);
     font-family: var(--font-mono);
     text-decoration: none;
@@ -97,7 +104,17 @@ const navLinks = [
     color: var(--flutter-blue);
   }
 
+  @media (max-width: 600px) {
+    ol li {
+      margin: 0 auto 10px;
+    }
+  }
+
+  .lang-switch-mobile {
+    margin-top: 30px;
+  }
+
   .resume-link {
-    margin-top: 50px;
+    margin: 10% auto 0;
   }
 </style>

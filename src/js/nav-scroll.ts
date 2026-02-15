@@ -1,10 +1,15 @@
+let cleanup: (() => void) | null = null;
+
 function initNavScroll() {
+  cleanup?.();
+
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) return;
 
   const header = document.getElementById('nav-header');
   if (!header) return;
 
+  const h = header;
   const DELTA = 5;
   let lastScrollTop = 0;
   let ticking = false;
@@ -22,16 +27,13 @@ function initNavScroll() {
       }
 
       if (currentScroll < 50) {
-        // At top
-        header.classList.remove('scroll-down', 'scroll-up');
+        h.classList.remove('scroll-down', 'scroll-up');
       } else if (currentScroll > lastScrollTop) {
-        // Scrolling down
-        header.classList.add('scroll-down');
-        header.classList.remove('scroll-up');
+        h.classList.add('scroll-down');
+        h.classList.remove('scroll-up');
       } else {
-        // Scrolling up
-        header.classList.add('scroll-up');
-        header.classList.remove('scroll-down');
+        h.classList.add('scroll-up');
+        h.classList.remove('scroll-down');
       }
 
       lastScrollTop = currentScroll;
@@ -40,6 +42,7 @@ function initNavScroll() {
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
+  cleanup = () => window.removeEventListener('scroll', onScroll);
 }
 
-document.addEventListener('DOMContentLoaded', initNavScroll);
+document.addEventListener('astro:page-load', initNavScroll);

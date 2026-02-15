@@ -4,27 +4,28 @@ import IconLinkedin from './icons/IconLinkedin.astro';
 import IconTwitter from './icons/IconTwitter.astro';
 import IconInstagram from './icons/IconInstagram.astro';
 import IconCodepen from './icons/IconCodepen.astro';
+import { useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/constants';
 
-const socials = [
-  { name: 'GitHub', url: 'https://github.com' },
-  { name: 'LinkedIn', url: 'https://linkedin.com' },
-  { name: 'Twitter', url: 'https://twitter.com' },
-  { name: 'Instagram', url: 'https://instagram.com' },
-  { name: 'CodePen', url: 'https://codepen.io' },
-];
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = useTranslations(locale);
 ---
 
 <footer>
   <div class="social-links-mobile">
     <ul>
-      {socials.map(social => (
+      {t.social.profiles.map(social => (
         <li>
           <a href={social.url} aria-label={social.name} target="_blank" rel="noreferrer">
-            {social.name === 'GitHub' && <IconGitHub />}
-            {social.name === 'LinkedIn' && <IconLinkedin />}
-            {social.name === 'Twitter' && <IconTwitter />}
-            {social.name === 'Instagram' && <IconInstagram />}
-            {social.name === 'CodePen' && <IconCodepen />}
+            {social.icon === 'github' && <IconGitHub />}
+            {social.icon === 'linkedin' && <IconLinkedin />}
+            {social.icon === 'twitter' && <IconTwitter />}
+            {social.icon === 'instagram' && <IconInstagram />}
+            {social.icon === 'codepen' && <IconCodepen />}
           </a>
         </li>
       ))}
@@ -32,7 +33,7 @@ const socials = [
   </div>
   <div class="credit">
     <a href="https://brittanychiang.com" target="_blank" rel="noreferrer">
-      Designed by Brittany Chiang
+      {t.footer.designedBy}
     </a>
   </div>
 </footer>
@@ -66,6 +67,7 @@ const socials = [
     padding: 0;
     margin: 0;
     list-style: none;
+    max-width: 270px;
   }
 
   .social-links-mobile a {
@@ -79,7 +81,7 @@ const socials = [
     color: var(--flutter-blue);
   }
 
-  .social-links-mobile svg {
+  .social-links-mobile :global(svg) {
     width: 20px;
     height: 20px;
   }

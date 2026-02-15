@@ -1,0 +1,242 @@
+---
+import { getCollection } from 'astro:content';
+import IconExternal from '@icons/IconExternal.astro';
+import { useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/constants';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = useTranslations(locale);
+
+const GRID_LIMIT = 6;
+const allPosts = await getCollection(`blog-${locale}`);
+const posts = allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+---
+
+<section id="blog">
+  <h2 class="blog-title">{t.blog.heading}</h2>
+  <a class="inline-link blog-archive-link" href={t.blog.archiveUrl} target="_blank" rel="noreferrer">{t.blog.archiveText}</a>
+
+  <ul class="blog-grid">
+    {posts.map((post, i) => (
+      <li class={`blog-card ${i >= GRID_LIMIT ? 'hidden-card' : ''}`} data-sr data-sr-delay={String(i * 100)}>
+        <div class="blog-inner box-shadow">
+          <header>
+            <div class="blog-top">
+              <div class="blog-icon">
+                <IconExternal />
+              </div>
+              <div class="blog-links">
+                <a href={post.data.external} aria-label={t.blog.externalAriaLabel} target="_blank" rel="noreferrer">
+                  <IconExternal />
+                </a>
+              </div>
+            </div>
+            <h3 class="blog-post-title">
+              <a href={post.data.external} target="_blank" rel="noreferrer">
+                {post.data.title}
+              </a>
+            </h3>
+            <p class="blog-description">{post.data.description}</p>
+          </header>
+          <footer>
+            <ul class="blog-topics-list">
+              {post.data.topics.map(topic => <li>{topic}</li>)}
+              <li class="platform-badge">{post.data.platform}</li>
+            </ul>
+            {post.data.readTime && (
+              <span class="read-time">{post.data.readTime}</span>
+            )}
+          </footer>
+        </div>
+      </li>
+    ))}
+  </ul>
+
+  {posts.length > GRID_LIMIT && (
+    <button
+      class="btn show-more-btn"
+      id="show-more-btn"
+      data-show-more={t.blog.showMoreText}
+      data-show-less={t.blog.showLessText}
+    >
+      {t.blog.showMoreText}
+    </button>
+  )}
+</section>
+
+<style>
+  section {
+    text-align: center;
+  }
+
+  .blog-title {
+    font-size: clamp(1.5rem, 5vw, var(--fz-heading));
+    color: var(--lightest-slate);
+    margin: 0;
+  }
+
+  .blog-archive-link {
+    display: inline-block;
+    margin: 10px 0 0;
+    font-family: var(--font-mono);
+    font-size: var(--fz-sm);
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+    padding: 0;
+    margin-top: 50px;
+    list-style: none;
+    position: relative;
+  }
+
+  @media (max-width: 1080px) {
+    .blog-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+  }
+
+  .hidden-card {
+    display: none;
+  }
+  .hidden-card.visible {
+    display: list-item;
+  }
+
+  .blog-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    height: 100%;
+    padding: 2rem 1.75rem;
+    border-radius: var(--border-radius);
+    background-color: var(--dark-gray);
+    transition: var(--transition);
+    text-align: left;
+  }
+
+  .blog-inner:hover {
+    transform: translateY(-7px);
+  }
+
+  .blog-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+  }
+
+  .blog-icon :global(svg) {
+    width: 40px;
+    height: 40px;
+    color: var(--flutter-blue);
+  }
+
+  .blog-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: -10px;
+  }
+
+  .blog-links a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 7px;
+    color: var(--light-slate);
+    transition: var(--transition);
+  }
+  .blog-links a:hover {
+    color: var(--flutter-blue);
+  }
+  .blog-links a :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+
+  .blog-post-title {
+    margin: 0 0 10px;
+    font-size: var(--fz-xxl);
+    color: var(--lightest-slate);
+  }
+  .blog-post-title a {
+    transition: var(--transition);
+  }
+  .blog-post-title a:hover {
+    color: var(--flutter-blue);
+  }
+
+  .blog-description {
+    color: var(--light-slate);
+    font-size: 1.0625rem;
+    margin: 0;
+  }
+
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: auto;
+  }
+
+  .blog-topics-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 20px 0 0;
+    list-style: none;
+    gap: 0 15px;
+  }
+  .blog-topics-list li {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xxs);
+    color: var(--slate);
+    line-height: 1.75;
+  }
+
+  .platform-badge {
+    color: var(--flutter-blue) !important;
+  }
+
+  .read-time {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xxs);
+    color: var(--slate);
+    margin-top: 20px;
+    white-space: nowrap;
+  }
+
+  .show-more-btn {
+    margin-top: 80px;
+  }
+</style>
+
+<script>
+  function initShowMore() {
+    const btn = document.getElementById('show-more-btn') as HTMLButtonElement | null;
+    if (!btn) return;
+
+    const hiddenCards = document.querySelectorAll('.hidden-card');
+    const showMoreText = btn.dataset.showMore || 'Show More';
+    const showLessText = btn.dataset.showLess || 'Show Less';
+    let isExpanded = false;
+
+    btn.addEventListener('click', () => {
+      isExpanded = !isExpanded;
+      hiddenCards.forEach(card => card.classList.toggle('visible', isExpanded));
+      btn.textContent = isExpanded ? showLessText : showMoreText;
+    });
+  }
+
+  document.addEventListener('astro:page-load', initShowMore);
+</script>

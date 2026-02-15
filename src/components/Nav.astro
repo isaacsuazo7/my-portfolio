@@ -1,37 +1,43 @@
 ---
 import IconLogo from './icons/IconLogo.astro';
 import Menu from './Menu.astro';
+import { useTranslations, getLocalizedUrl } from '@i18n/utils';
+import type { Locale } from '@i18n/constants';
 
-const navLinks = [
-  { name: 'About', url: '/#about' },
-  { name: 'Experience', url: '/#jobs' },
-  { name: 'Work', url: '/#projects' },
-  { name: 'Contact', url: '/#contact' },
-];
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = useTranslations(locale);
+const otherLocale = locale === 'en' ? 'es' : 'en';
 ---
 
 <header id="nav-header">
   <nav class="flex-between">
     <div class="logo" tabindex="-1">
-      <a href="/" aria-label="Home">
+      <a href={getLocalizedUrl(locale)} aria-label={t.nav.homeAriaLabel}>
         <IconLogo />
       </a>
     </div>
     <div class="nav-links">
       <ol>
-        {navLinks.map((link, i) => (
+        {t.nav.links.map((link, i) => (
           <li style={`transition-delay: ${i * 100}ms;`}>
             <a href={link.url}>{link.name}</a>
           </li>
         ))}
       </ol>
-      <a class="btn resume-btn" href="/resume.pdf" target="_blank" rel="noreferrer" style="transition-delay: 400ms;">
-        Resume
+      <a class="btn lang-switch" href={getLocalizedUrl(otherLocale)} style={`transition-delay: ${t.nav.links.length * 100}ms;`}>
+        {t.nav.langSwitchLabel}
+      </a>
+      <a class="btn resume-btn" href={t.nav.resumeUrl} target="_blank" rel="noreferrer" style={`transition-delay: ${(t.nav.links.length + 1) * 100}ms;`}>
+        {t.nav.resumeText}
       </a>
     </div>
     <button
       class="hamburger"
-      aria-label="Menu"
+      aria-label={t.nav.menuAriaLabel}
       aria-expanded="false"
       aria-controls="mobile-menu"
     >
@@ -40,7 +46,7 @@ const navLinks = [
       </div>
     </button>
   </nav>
-  <Menu />
+  <Menu locale={locale} />
 </header>
 
 <script>
@@ -154,6 +160,11 @@ const navLinks = [
   .nav-links ol li a:hover,
   .nav-links ol li a:focus-visible {
     color: var(--flutter-blue);
+  }
+
+  .lang-switch {
+    margin-left: 15px;
+    font-size: var(--fz-xs);
   }
 
   .resume-btn {

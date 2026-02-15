@@ -10,20 +10,20 @@
   --lightest-slate: #ccd6f6;
   --white: #e6f1ff;
   --flutter-blue: #54C5F8;
-  --flutter-blue-tint: rgba(84, 197, 248, 0.1);
+  --flutter-blue-tint: rgba(84, 197, 248, 0.15);
   --shadow-color: rgba(2, 2, 10, 0.7);
 
   /* ===== Typography ===== */
   --font-sans: 'Inter', 'San Francisco', 'SF Pro Text', -apple-system, system-ui, sans-serif;
   --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
-  --fz-xxs: 12px;
-  --fz-xs: 13px;
-  --fz-sm: 14px;
-  --fz-md: 16px;
-  --fz-lg: 18px;
-  --fz-xl: 20px;
-  --fz-xxl: 22px;
-  --fz-heading: 32px;
+  --fz-xxs: 0.75rem;      /* 12px */
+  --fz-xs: 0.8125rem;     /* 13px */
+  --fz-sm: 0.875rem;      /* 14px */
+  --fz-md: 1rem;          /* 16px */
+  --fz-lg: 1.125rem;      /* 18px */
+  --fz-xl: 1.25rem;       /* 20px */
+  --fz-xxl: 1.375rem;     /* 22px */
+  --fz-heading: 2rem;     /* 32px */
 
   /* ===== Layout ===== */
   --border-radius: 4px;

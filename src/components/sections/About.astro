@@ -1,27 +1,36 @@
 ---
-const skills = ['Flutter', 'Dart', 'TypeScript', 'Astro', 'Firebase', 'Node.js'];
+import { useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/constants';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = useTranslations(locale);
+
+// Build the second paragraph with inline links
+const linksSeparator = locale === 'es' ? ', ' : ', ';
+const lastSeparator = locale === 'es' ? ' y ' : ', and ';
 ---
 
 <section id="about" data-sr>
-  <h2 class="numbered-heading">About Me</h2>
+  <h2 class="numbered-heading">{t.about.heading}</h2>
   <div class="about-grid">
     <div class="about-text">
+      <p set:html={t.about.paragraphs[0]} />
       <p>
-        Hello! My name is Isaac and I enjoy creating things that live on the internet.
-        My interest in web development started back in 2012 when I decided to try editing
-        custom Tumblr themes — turns out hacking together a custom reblog button taught me
-        a lot about HTML &amp; CSS!
+        {t.about.paragraphs[1].split('{links}')[0]}
+        {t.about.companyLinks.map((link, i) => (
+          <>
+            <a class="inline-link" href={link.url} target="_blank" rel="noreferrer">{link.text}</a>{i < t.about.companyLinks.length - 2 ? linksSeparator : i === t.about.companyLinks.length - 2 ? lastSeparator : ''}
+          </>
+        ))}
+        {t.about.paragraphs[1].split('{links}')[1]}
       </p>
-      <p>
-        Fast-forward to today, and I've had the privilege of working at
-        <a class="inline-link" href="https://example.com" target="_blank" rel="noreferrer">a start-up</a>,
-        <a class="inline-link" href="https://example.com" target="_blank" rel="noreferrer">a huge corporation</a>, and
-        <a class="inline-link" href="https://example.com" target="_blank" rel="noreferrer">a student-led design studio</a>.
-        My main focus these days is building accessible, inclusive products and digital experiences.
-      </p>
-      <p>Here are a few technologies I've been working with recently:</p>
+      <p>{t.about.skillsIntro}</p>
       <ul class="skills-list fancy-list">
-        {skills.map(skill => (
+        {t.about.skills.map(skill => (
           <li>{skill}</li>
         ))}
       </ul>
@@ -29,7 +38,7 @@ const skills = ['Flutter', 'Dart', 'TypeScript', 'Astro', 'Firebase', 'Node.js']
     <div class="about-image">
       <div class="image-wrapper">
         <div class="image-inner">
-          <img src="/images/projects/project-1.png" alt="Isaac Suazo" width="500" height="500" />
+          <img src={t.about.imageUrl} alt={t.about.imageAlt} width="500" height="500" />
         </div>
       </div>
     </div>
@@ -37,6 +46,10 @@ const skills = ['Flutter', 'Dart', 'TypeScript', 'Astro', 'Firebase', 'Node.js']
 </section>
 
 <style>
+  section {
+    max-width: 900px;
+  }
+
   .about-grid {
     display: grid;
     grid-template-columns: 3fr 2fr;
@@ -61,6 +74,11 @@ const skills = ['Flutter', 'Dart', 'TypeScript', 'Astro', 'Firebase', 'Node.js']
     margin: 20px 0 0;
     overflow: hidden;
     list-style: none;
+  }
+
+  .skills-list li {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
   }
 
   .about-image {

@@ -1,15 +1,20 @@
 ---
+import { useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/constants';
 
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = useTranslations(locale);
 ---
 
 <section id="contact" data-sr>
-  <h2 class="contact-overline">04. What's Next?</h2>
-  <h2 class="medium-heading">Get In Touch</h2>
-  <p class="contact-description">
-    Although I'm not currently looking for any new opportunities, my inbox is always open.
-    Whether you have a question or just want to say hi, I'll try my best to get back to you!
-  </p>
-  <a class="btn btn-big" href="mailto:hello@example.com">Say Hello</a>
+  <p class="contact-overline">{t.contact.overline}</p>
+  <h2 class="medium-heading">{t.contact.heading}</h2>
+  <p class="contact-description">{t.contact.description}</p>
+  <a class="btn btn-big" href={`mailto:${t.social.email}`}>{t.contact.ctaText}</a>
 </section>
 
 <style>
@@ -17,6 +22,10 @@
     max-width: 600px;
     margin: 0 auto;
     text-align: center;
+  }
+
+  .medium-heading {
+    font-size: clamp(2.5rem, 5vw, 3.75rem);
   }
 
   .contact-overline {
