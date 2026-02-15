@@ -1,0 +1,141 @@
+---
+const skills = ['Flutter', 'Dart', 'TypeScript', 'Astro', 'Firebase', 'Node.js'];
+---
+
+<section id="about" data-sr>
+  <h2 class="numbered-heading">About Me</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        Hello! My name is Isaac and I enjoy creating things that live on the internet.
+        My interest in web development started back in 2012 when I decided to try editing
+        custom Tumblr themes — turns out hacking together a custom reblog button taught me
+        a lot about HTML &amp; CSS!
+      </p>
+      <p>
+        Fast-forward to today, and I've had the privilege of working at
+        <a class="inline-link" href="https://example.com" target="_blank" rel="noreferrer">a start-up</a>,
+        <a class="inline-link" href="https://example.com" target="_blank" rel="noreferrer">a huge corporation</a>, and
+        <a class="inline-link" href="https://example.com" target="_blank" rel="noreferrer">a student-led design studio</a>.
+        My main focus these days is building accessible, inclusive products and digital experiences.
+      </p>
+      <p>Here are a few technologies I've been working with recently:</p>
+      <ul class="skills-list fancy-list">
+        {skills.map(skill => (
+          <li>{skill}</li>
+        ))}
+      </ul>
+    </div>
+    <div class="about-image">
+      <div class="image-wrapper">
+        <div class="image-inner">
+          <img src="/images/projects/project-1.png" alt="Isaac Suazo" width="500" height="500" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 50px;
+  }
+
+  @media (max-width: 768px) {
+    .about-grid {
+      display: block;
+    }
+  }
+
+  .about-text p {
+    margin-bottom: 15px;
+  }
+
+  .skills-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(140px, 200px));
+    gap: 0 10px;
+    padding: 0;
+    margin: 20px 0 0;
+    overflow: hidden;
+    list-style: none;
+  }
+
+  .about-image {
+    position: relative;
+    max-width: 300px;
+  }
+
+  @media (max-width: 768px) {
+    .about-image {
+      margin: 50px auto 0;
+      width: 70%;
+    }
+  }
+
+  .image-wrapper {
+    display: block;
+    position: relative;
+    width: 100%;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+  }
+
+  .image-wrapper::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--flutter-blue);
+    top: 14px;
+    left: 14px;
+    z-index: -1;
+    transition: var(--transition);
+  }
+
+  .image-wrapper:hover::after {
+    top: 10px;
+    left: 10px;
+  }
+
+  .image-wrapper:hover {
+    transform: translate(-4px, -4px);
+  }
+
+  .image-inner {
+    position: relative;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+  }
+
+  .image-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--flutter-blue);
+    mix-blend-mode: screen;
+    z-index: 1;
+    transition: var(--transition);
+  }
+
+  .image-wrapper:hover .image-inner::before {
+    background-color: transparent;
+  }
+
+  .image-inner img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    filter: grayscale(100%) contrast(1);
+    transition: var(--transition);
+  }
+
+  .image-wrapper:hover .image-inner img {
+    filter: none;
+  }
+</style>

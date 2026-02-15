@@ -1,0 +1,272 @@
+---
+import { getCollection } from 'astro:content';
+import { render } from 'astro:content';
+
+const allJobs = await getCollection('jobs');
+const jobs = allJobs.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+---
+
+<section id="jobs" data-sr>
+  <h2 class="numbered-heading">Where I've Worked</h2>
+
+  <div class="jobs-inner">
+    <div class="tablist" role="tablist" aria-label="Job tabs">
+      <div class="tab-highlight"></div>
+      {jobs.map((job, i) => (
+        <button
+          class={`tab-btn ${i === 0 ? 'active' : ''}`}
+          id={`tab-${i}`}
+          role="tab"
+          aria-selected={i === 0 ? 'true' : 'false'}
+          aria-controls={`panel-${i}`}
+          tabindex={i === 0 ? 0 : -1}
+          data-index={i}
+        >
+          {job.data.company}
+        </button>
+      ))}
+    </div>
+
+    <div class="panels">
+      {jobs.map(async (job, i) => {
+        const { Content } = await render(job);
+        return (
+          <div
+            class="panel"
+            id={`panel-${i}`}
+            role="tabpanel"
+            aria-labelledby={`tab-${i}`}
+            aria-hidden={i !== 0 ? 'true' : 'false'}
+            hidden={i !== 0}
+          >
+            <h3 class="panel-title">
+              <span>{job.data.title}</span>
+              <span class="company">
+                &nbsp;@&nbsp;
+                <a href={job.data.url} class="inline-link" target="_blank" rel="noreferrer">
+                  {job.data.company}
+                </a>
+              </span>
+            </h3>
+            <p class="panel-range">{job.data.range}</p>
+            <div class="panel-content">
+              <Content />
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .jobs-inner {
+    display: flex;
+    min-height: 340px;
+  }
+
+  @media (max-width: 600px) {
+    .jobs-inner {
+      display: block;
+    }
+  }
+
+  /* Tab list */
+  .tablist {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: max(120px, var(--tab-width));
+    z-index: 3;
+    border-left: 2px solid var(--medium-gray);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 600px) {
+    .tablist {
+      flex-direction: row;
+      overflow-x: auto;
+      width: 100%;
+      border-left: 0;
+      border-bottom: 2px solid var(--medium-gray);
+      margin-bottom: 30px;
+      scrollbar-width: none;
+    }
+    .tablist::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: var(--tab-height);
+    padding: 0 20px 2px;
+    border: 0;
+    background-color: transparent;
+    color: var(--slate);
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  @media (max-width: 600px) {
+    .tab-btn {
+      min-width: var(--tab-width);
+      padding: 0 15px;
+      justify-content: center;
+    }
+  }
+
+  .tab-btn:hover,
+  .tab-btn:focus-visible {
+    background-color: var(--flutter-blue-tint);
+    color: var(--flutter-blue);
+  }
+
+  .tab-btn.active {
+    color: var(--flutter-blue);
+  }
+
+  /* Highlight indicator */
+  .tab-highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 2px;
+    height: var(--tab-height);
+    border-radius: var(--border-radius);
+    background: var(--flutter-blue);
+    transform: translateY(0);
+    transition: transform 0.25s var(--easing) 0.1s;
+  }
+
+  @media (max-width: 600px) {
+    .tab-highlight {
+      top: auto;
+      bottom: 0;
+      width: var(--tab-width);
+      height: 2px;
+      transform: translateX(0);
+    }
+  }
+
+  /* Panels */
+  .panels {
+    position: relative;
+    width: 100%;
+    margin-left: 20px;
+  }
+
+  @media (max-width: 600px) {
+    .panels {
+      margin-left: 0;
+    }
+  }
+
+  .panel-title {
+    margin-bottom: 2px;
+    font-size: var(--fz-xxl);
+    font-weight: 500;
+    color: var(--lightest-slate);
+  }
+
+  .company {
+    color: var(--flutter-blue);
+  }
+
+  .panel-range {
+    margin-bottom: 25px;
+    color: var(--light-slate);
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+  }
+
+  .panel-content :global(ul) {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-size: var(--fz-lg);
+  }
+
+  .panel-content :global(li) {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 10px;
+  }
+
+  .panel-content :global(li::before) {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    color: var(--flutter-blue);
+  }
+</style>
+
+<script>
+  function initTabs() {
+    const tablist = document.querySelector('.tablist') as HTMLElement;
+    if (!tablist) return;
+
+    const tabs = tablist.querySelectorAll<HTMLButtonElement>('.tab-btn');
+    const panels = document.querySelectorAll<HTMLElement>('.panel');
+    const highlight = tablist.querySelector<HTMLElement>('.tab-highlight');
+    const isVertical = () => window.innerWidth > 600;
+
+    function activateTab(index: number) {
+      tabs.forEach((tab, i) => {
+        const isActive = i === index;
+        tab.classList.toggle('active', isActive);
+        tab.setAttribute('aria-selected', String(isActive));
+        tab.tabIndex = isActive ? 0 : -1;
+      });
+
+      panels.forEach((panel, i) => {
+        const isActive = i === index;
+        panel.hidden = !isActive;
+        panel.setAttribute('aria-hidden', String(!isActive));
+      });
+
+      if (highlight) {
+        if (isVertical()) {
+          highlight.style.transform = `translateY(calc(${index} * var(--tab-height)))`;
+        } else {
+          highlight.style.transform = `translateX(calc(${index} * var(--tab-width)))`;
+        }
+      }
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const index = Number(tab.dataset.index);
+        activateTab(index);
+      });
+    });
+
+    tablist.addEventListener('keydown', (e: KeyboardEvent) => {
+      const currentIndex = Array.from(tabs).findIndex(t => t === document.activeElement);
+      let newIndex = currentIndex;
+
+      if (isVertical()) {
+        if (e.key === 'ArrowDown') newIndex = (currentIndex + 1) % tabs.length;
+        else if (e.key === 'ArrowUp') newIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+        else return;
+      } else {
+        if (e.key === 'ArrowRight') newIndex = (currentIndex + 1) % tabs.length;
+        else if (e.key === 'ArrowLeft') newIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+        else return;
+      }
+
+      e.preventDefault();
+      activateTab(newIndex);
+      tabs[newIndex].focus();
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initTabs);
+</script>

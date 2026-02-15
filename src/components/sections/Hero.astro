@@ -1,0 +1,55 @@
+---
+
+---
+
+<section id="hero">
+  <h1 class="hero-overline">Hi, my name is</h1>
+  <h2 class="big-heading hero-name">Isaac Suazo.</h2>
+  <h3 class="big-heading hero-subtitle">I build things for the web.</h3>
+  <p class="hero-description">
+    I'm a software engineer specializing in building (and occasionally designing)
+    exceptional digital experiences. Currently, I'm focused on building accessible,
+    human-centered products at
+    <a class="inline-link" href="https://example.com" target="_blank" rel="noreferrer">Example Corp</a>.
+  </p>
+  <a class="btn btn-big hero-cta" href="mailto:hello@example.com">
+    Get In Touch
+  </a>
+</section>
+
+<style>
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .hero-overline {
+    margin: 0 0 30px 4px;
+    color: var(--flutter-blue);
+    font-family: var(--font-mono);
+    font-size: clamp(var(--fz-sm), 5vw, var(--fz-md));
+    font-weight: 400;
+  }
+
+  .hero-name {
+    color: var(--lightest-slate);
+  }
+
+  .hero-subtitle {
+    color: var(--slate);
+    margin-top: 5px;
+  }
+
+  .hero-description {
+    max-width: 540px;
+    margin-top: 20px;
+  }
+
+  .hero-cta {
+    margin-top: 50px;
+  }
+</style>
