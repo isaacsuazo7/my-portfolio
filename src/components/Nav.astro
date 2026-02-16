@@ -15,7 +15,7 @@ const otherLocale = locale === 'en' ? 'es' : 'en';
 
 <header id="nav-header">
   <nav class="flex-between">
-    <div class="logo" tabindex="-1">
+    <div class="logo nav-anim fade-enter" tabindex="-1">
       <a href={getLocalizedUrl(locale)} aria-label={t.nav.homeAriaLabel}>
         <IconLogo />
       </a>
@@ -23,15 +23,15 @@ const otherLocale = locale === 'en' ? 'es' : 'en';
     <div class="nav-links">
       <ol>
         {t.nav.links.map((link, i) => (
-          <li style={`transition-delay: ${i * 100}ms;`}>
+          <li class="nav-anim fadedown-enter" style={`transition-delay: ${i * 100}ms;`}>
             <a href={link.url}>{link.name}</a>
           </li>
         ))}
       </ol>
-      <a class="btn lang-switch" href={getLocalizedUrl(otherLocale)} style={`transition-delay: ${t.nav.links.length * 100}ms;`}>
+      <a class="btn lang-switch nav-anim fadedown-enter" href={getLocalizedUrl(otherLocale)} style={`transition-delay: ${t.nav.links.length * 100}ms;`}>
         {t.nav.langSwitchLabel}
       </a>
-      <a class="btn resume-btn" href={t.nav.resumeUrl} target="_blank" rel="noreferrer" style={`transition-delay: ${(t.nav.links.length + 1) * 100}ms;`}>
+      <a class="btn resume-btn nav-anim fadedown-enter" href={t.nav.resumeUrl} target="_blank" rel="noreferrer" style={`transition-delay: ${(t.nav.links.length + 1) * 100}ms;`}>
         {t.nav.resumeText}
       </a>
     </div>
@@ -52,6 +52,31 @@ const otherLocale = locale === 'en' ? 'es' : 'en';
 <script>
   import '@js/nav-scroll';
   import '@js/menu';
+
+  function initNavAnimations() {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const navElements = document.querySelectorAll<HTMLElement>('.nav-anim');
+
+    if (prefersReducedMotion) {
+      navElements.forEach(el => {
+        el.classList.add(el.classList.contains('fade-enter') ? 'fade-enter-active' : 'fadedown-enter-active');
+      });
+      return;
+    }
+
+    navElements.forEach((el, i) => {
+      setTimeout(() => {
+        const isFade = el.classList.contains('fade-enter');
+        el.classList.add(isFade ? 'fade-enter-active' : 'fadedown-enter-active');
+        setTimeout(() => {
+          el.classList.remove(isFade ? 'fade-enter' : 'fadedown-enter');
+          el.style.transitionDelay = '';
+        }, 300);
+      }, (i + 1) * 100);
+    });
+  }
+
+  document.addEventListener('astro:page-load', initNavAnimations);
 </script>
 
 <style>
