@@ -6,9 +6,27 @@ interface Props {
 const { orientation } = Astro.props;
 ---
 
-<div class={`side ${orientation}`}>
+<div class={`side fade-enter ${orientation}`}>
   <slot />
 </div>
+
+<script>
+  function initSideAnimations() {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const sideElements = document.querySelectorAll<HTMLElement>('.side.fade-enter');
+
+    if (prefersReducedMotion) {
+      sideElements.forEach(el => el.classList.add('fade-enter-active'));
+      return;
+    }
+
+    setTimeout(() => {
+      sideElements.forEach(el => el.classList.add('fade-enter-active'));
+    }, 400);
+  }
+
+  document.addEventListener('astro:page-load', initSideAnimations);
+</script>
 
 <style>
   .side {

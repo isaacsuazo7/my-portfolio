@@ -80,7 +80,8 @@ const t = useTranslations(locale);
     heroElements.forEach((el, i) => {
       setTimeout(() => {
         el.classList.add('fadeup-enter-active');
-      }, i * 100);
+        setTimeout(() => el.classList.remove('fadeup-enter'), 300);
+      }, (i + 1) * 100);
     });
   }
 
