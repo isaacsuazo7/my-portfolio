@@ -20,8 +20,8 @@ const canonicalUrl = new URL(getLocalizedUrl(locale), Astro.site).href;
 
 <link rel="icon" href="/favicon.ico" />
 <link rel="canonical" href={canonicalUrl} />
-<link rel="alternate" hreflang={otherLocale} href={getLocalizedUrl(otherLocale)} />
-<link rel="alternate" hreflang={locale} href={getLocalizedUrl(locale)} />
+<link rel="alternate" hreflang={otherLocale} href={new URL(getLocalizedUrl(otherLocale), Astro.site).href} />
+<link rel="alternate" hreflang={locale} href={canonicalUrl} />
 <link rel="sitemap" href="/sitemap-index.xml" />
 
 <!-- Font preloads -->
