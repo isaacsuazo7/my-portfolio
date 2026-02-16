@@ -78,7 +78,7 @@ const jobs = allJobs.sort((a, b) => new Date(b.data.date).getTime() - new Date(a
     min-height: 340px;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     .jobs-inner {
       display: block;
     }
@@ -95,7 +95,7 @@ const jobs = allJobs.sort((a, b) => new Date(b.data.date).getTime() - new Date(a
     flex-shrink: 0;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     .tablist {
       flex-direction: row;
       overflow-x: auto;
@@ -127,7 +127,7 @@ const jobs = allJobs.sort((a, b) => new Date(b.data.date).getTime() - new Date(a
     transition: var(--transition);
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     .tab-btn {
       min-width: var(--tab-width);
       padding: 0 15px;
@@ -159,7 +159,7 @@ const jobs = allJobs.sort((a, b) => new Date(b.data.date).getTime() - new Date(a
     transition: transform 0.25s var(--easing) 0.1s;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     .tab-highlight {
       top: auto;
       bottom: 0;
@@ -177,7 +177,7 @@ const jobs = allJobs.sort((a, b) => new Date(b.data.date).getTime() - new Date(a
     padding: 10px 5px;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     .panels {
       margin-left: 0;
     }
@@ -230,7 +230,7 @@ const jobs = allJobs.sort((a, b) => new Date(b.data.date).getTime() - new Date(a
     const tabs = tablist.querySelectorAll<HTMLButtonElement>('.tab-btn');
     const panels = document.querySelectorAll<HTMLElement>('.panel');
     const highlight = tablist.querySelector<HTMLElement>('.tab-highlight');
-    const isVertical = () => window.innerWidth > 600;
+    const isVertical = () => window.innerWidth > 768;
 
     function activateTab(index: number) {
       tabs.forEach((tab, i) => {
