@@ -88,7 +88,8 @@ const posts = allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date
 
   .blog-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 400px));
+    justify-content: center;
     gap: 15px;
     padding: 0;
     margin-top: 50px;
@@ -98,7 +99,7 @@ const posts = allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date
 
   @media (max-width: 1080px) {
     .blog-grid {
-      grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 400px));
     }
   }
 

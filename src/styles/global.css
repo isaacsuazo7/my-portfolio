@@ -9,6 +9,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-scroll-height);
   scrollbar-width: thin;
   scrollbar-color: var(--dark-slate) var(--black);
 }
@@ -104,6 +105,7 @@ section {
 h1, h2, h3, h4, h5, h6 {
   color: var(--lightest-slate);
   font-weight: 600;
+  line-height: 1.1;
 }
 
 .big-heading {

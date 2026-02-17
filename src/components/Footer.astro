@@ -105,6 +105,15 @@ const t = useTranslations(locale);
     color: var(--slate);
   }
 
+  @media (max-width: 768px) {
+    .credit {
+      flex-direction: column;
+    }
+    .separator {
+      display: none;
+    }
+  }
+
   .credit a {
     color: var(--light-slate);
     text-decoration: none;
