@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import IconExternal from '@icons/IconExternal.astro';
+import IconYouTube from '@icons/IconYouTube.astro';
+import IconMedium from '@icons/IconMedium.astro';
 import { useTranslations } from '@i18n/utils';
 import type { Locale } from '@i18n/constants';
 
@@ -27,7 +29,9 @@ const posts = allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date
           <header>
             <div class="blog-top">
               <div class="blog-icon">
-                <IconExternal />
+                {post.data.platform === 'YouTube' ? <IconYouTube /> :
+                 post.data.platform === 'Medium' ? <IconMedium /> :
+                 <IconExternal />}
               </div>
               <div class="blog-links">
                 <a href={post.data.external} aria-label={t.blog.externalAriaLabel} target="_blank" rel="noreferrer">
@@ -126,6 +130,10 @@ const posts = allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date
 
   .blog-inner:hover {
     transform: translateY(-7px);
+  }
+
+  header {
+    width: 100%;
   }
 
   .blog-top {
